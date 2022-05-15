@@ -15,9 +15,12 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('website_id');
             $table->string('title');
             $table->longText('description');
             $table->timestamps();
+
+            $table->foreign('website_id')->references('id')->on('websites')->onUpdate('RESTRICT')->onDelete('CASCADE');
         });
     }
 

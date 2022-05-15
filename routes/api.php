@@ -17,7 +17,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 //Website Routes
-Route::get('get-websites',[WebsiteController::class,'index']);
+Route::group(['prefix' => 'websites'], function () {
+    Route::get('/', [WebsiteController::class, 'index']);
+    Route::post('subscribe', [WebsiteController::class, 'subscribe']);
+});
 
 //Post Routes
 Route::post('/post', [PostController::class, 'store']);

@@ -4,16 +4,29 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 
 class Post extends Model
 {
     use HasFactory;
 
+    public static function boot()
+    {
+
+        parent::boot();
+
+        self::created(function ($model) {
+            Artisan::call('email:website-subscribers', ['post' => $model]);
+        });
+
+    }
 
     /**
      * @var string[]
      */
     protected $fillable = [
+        'website_id',
         'title',
         'description'
     ];
